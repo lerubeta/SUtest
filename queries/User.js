@@ -33,5 +33,17 @@ exports.getUserById = async (_id) => {
     } catch {
         return null;
     }
+}
 
+exports.updateUserById = async (user, userToUpdate) => { 
+    const _db = getDb();
+    try {
+        const collection = _db.collection('users');
+        console.log(user);
+        console.log(userToUpdate);
+        const updatedUser = await collection.updateOne({ "_id": user._id }, { $set: userToUpdate });
+        return updatedUser;
+    } catch {
+        return null;
+    }
 }

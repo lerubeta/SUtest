@@ -32,9 +32,29 @@ exports.getUserById = async (req, res) => {
         if (user) {
             res.json(user);
         } else { 
-            res.status(404).send('User not found')
+            res.status(404).send('User not found');
         }
     } else { 
-        res.status(404).send('Not found')
+        res.status(404).send('Not found');
+    }
+}
+
+exports.updateUserById = async (req, res) => { 
+    const _id = req.params.id;
+    const userToUpdate = req.body;
+    if (_id) {
+        const user = await UserModel.getUserById(_id);
+        if (user) {
+            const updateUser = await UserModel.updateUserById(user, userToUpdate);
+            if (updateUser) {
+                res.json(updateUser);
+            } else {
+                res.status(500).send("Server error"); 
+            }
+        } else { 
+            res.status(404).send('User not found');
+        }
+    } else { 
+        res.status(404).send('Not found');
     }
 }

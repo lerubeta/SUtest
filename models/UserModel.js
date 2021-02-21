@@ -7,7 +7,7 @@ exports.addUserToDb = async (user) => {
         const insertedUser = result.ops[0];
         return insertedUser;
     } else { 
-
+        return null;
     }
 }
 
@@ -19,6 +19,17 @@ exports.getAllUsers = async () => {
 exports.getUserById = async (_id) => { 
     const user = await User.getUserById(_id);
     return user;
+}
+
+exports.updateUserById = async (user, userToUpdate) => { 
+    const userUpdated = await User.updateUserById(user, userToUpdate);
+    if (userUpdated) { 
+        const userToReturn = await User.getUserById(user._id)
+        console.log(userToReturn)
+        return userToReturn;
+    }else { 
+        return null;
+    }
 }
 
 const createUserObjectToInsert = (user) => { 

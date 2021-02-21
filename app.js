@@ -9,9 +9,10 @@ const UserController = require("./controllers/UserController");
 app.use(cors());
 app.use(bodyParser.json());
 
-//User Endpoints -- 
+//User Endpoints
 app.post("/user", UserController.createUser);
 app.get("/users", UserController.getAllUsers);
 app.get("/user/:id", UserController.getUserById);
+app.put("/user/:id", UserController.updateUserById);
 
 module.exports = app;
