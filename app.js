@@ -10,7 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //User Endpoints -- 
-app.post("/user", UserController.createUser)
-
+app.post("/user", UserController.createUser);
+app.get("/users", UserController.getAllUsers);
+app.get("/user/:id", UserController.getUserById);
 
 module.exports = app;

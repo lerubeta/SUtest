@@ -12,3 +12,26 @@ exports.addUser = async (user) => {
         return null;
     }
 }
+
+exports.getAllUsers = async () => {
+    const _db = getDb();
+    try {
+        const collection = _db.collection("users");
+        const result = await collection.find({}).toArray();
+        return result;
+    } catch {
+        return null;
+    }
+}
+
+exports.getUserById = async (_id) => { 
+    const _db = getDb();
+    try {
+        const collection = _db.collection('users');
+        const user = await collection.findOne({ "_id": ObjectID(_id) });
+        return user;
+    } catch {
+        return null;
+    }
+
+}
