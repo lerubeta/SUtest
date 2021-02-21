@@ -4,7 +4,7 @@ require("dotenv").config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const UserController = require("./controllers/UserController");
-
+const LocationController = require("./controllers/LocationController");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,5 +15,8 @@ app.get("/users", UserController.getAllUsers);
 app.get("/user/:id", UserController.getUserById);
 app.put("/user/:id", UserController.updateUserById);
 app.delete("/user/:id", UserController.deleteUserById);
+
+//Location Endpoints
+app.post("/location", LocationController.createLocation);
 
 module.exports = app;

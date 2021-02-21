@@ -46,5 +46,6 @@ const createUserObjectToInsert = (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         status: user.status,
+        locationHistory: []
     }
 }
