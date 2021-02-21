@@ -39,10 +39,19 @@ exports.updateUserById = async (user, userToUpdate) => {
     const _db = getDb();
     try {
         const collection = _db.collection('users');
-        console.log(user);
-        console.log(userToUpdate);
         const updatedUser = await collection.updateOne({ "_id": user._id }, { $set: userToUpdate });
         return updatedUser;
+    } catch {
+        return null;
+    }
+}
+
+exports.deleteUser = async (user) => { 
+    const _db = getDb();
+    try {
+        const collection = _db.collection('users');
+        const deleteUser = await collection.deleteOne({ "_id": user._id });     
+        return deleteUser;
     } catch {
         return null;
     }

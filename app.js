@@ -14,5 +14,6 @@ app.post("/user", UserController.createUser);
 app.get("/users", UserController.getAllUsers);
 app.get("/user/:id", UserController.getUserById);
 app.put("/user/:id", UserController.updateUserById);
+app.delete("/user/:id", UserController.deleteUserById);
 
 module.exports = app;

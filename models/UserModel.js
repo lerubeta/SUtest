@@ -32,6 +32,15 @@ exports.updateUserById = async (user, userToUpdate) => {
     }
 }
 
+exports.deleteUserById = async (user) => { 
+    const result = await User.deleteUser(user);
+    if(result){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 const createUserObjectToInsert = (user) => { 
     return {
         firstName: user.firstName,

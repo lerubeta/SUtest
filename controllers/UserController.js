@@ -58,3 +58,24 @@ exports.updateUserById = async (req, res) => {
         res.status(404).send('Not found');
     }
 }
+
+exports.deleteUserById = async (req, res) => { 
+    const _id = req.params.id;
+    if (_id) {
+        const user = await UserModel.getUserById(_id);
+        if (user) {
+            const deleteUser = await UserModel.deleteUserById(user);
+            if (deleteUser) {
+                res.status(200).send("User Deleted successfully");
+            } else { 
+                res.status(500).send("Server error");       
+            }
+        } else { 
+            res.status(404).send('User not found');
+        }
+    } else { 
+        res.status(404).send('Not found');
+    }
+
+
+}
