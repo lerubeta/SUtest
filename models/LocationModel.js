@@ -1,5 +1,6 @@
 const Location = require('../queries/Location');
-const ObjectID = require('mongodb').ObjectID;
+const UserModel = require("../models/UserModel");
+const { ObjectId } = require('mongodb');
 
 exports.createLocation = async (location, userId) => { 
     const locationToInsert = getLocationToInsert(location, userId);
@@ -18,8 +19,10 @@ exports.createLocation = async (location, userId) => {
 
 exports.searchLocations = async (query) => { 
     const searchQuery = createQueryForSearch(query);
-    const locationsResults = await Location.getLocationsByQuery(searchQuery);
-    return locationsResults;
+   // const locationsResults = await Location.getLocationsByQuery(searchQuery);
+    const usersIdsByLocationResults = await Location.getUsersIdByLocationQuery(searchQuery);
+    const usersFromIds = await UserModel.getUsersFromIds(usersIdsByLocationResults);
+    return usersFromIds;
 }
 
 const createQueryForSearch = (searchQuery) => {
@@ -32,7 +35,7 @@ const createQueryForSearch = (searchQuery) => {
 addCreatedLocationToUser = async (location, userId) => {
     if(!userId || !location) return null;
     const result = await Location.addLocationToUser(location,userId);
-    if(result){
+    if (result) {
         return true;
     }else{
         return false;
@@ -44,7 +47,7 @@ const getGeometryQuery = (latLong, distance) => {
     let latitude = parseFloat(latLongArray[0]);
     let longitude = parseFloat(latLongArray[1]);
     let maxDistance = parseInt(distance);
-    return { $near: { $maxDistance: maxDistance, $geometry: { type: "Point", coordinates: [latitude, longitude] } } };
+    return { $near: { $maxDistance: maxDistance, $geometry: { type: "Point", coordinates: [longitude, latitude] } } };
 }
 
 const getTimeQuery = (time) => { 
@@ -63,6 +66,6 @@ const getLocationToInsert = (location, userId) => {
             coordinates: [longitude, latitude],            
         },
         timestamp: new Date(),
-        userId: ObjectID(userId)
+        userId: ObjectId(userId)
     }
 }

@@ -1,5 +1,5 @@
 const { getDb } = require('../config/dbConnection');
-const ObjectID = require('mongodb').ObjectID;
+const { ObjectId } = require('mongodb');
 
 exports.addUser = async (user) => { 
     const _db = getDb();
@@ -28,8 +28,19 @@ exports.getUserById = async (_id) => {
     const _db = getDb();
     try {
         const collection = _db.collection("users");
-        const user = await collection.findOne({ "_id": ObjectID(_id) });
+        const user = await collection.findOne({ "_id": ObjectId(_id) });
         return user;
+    } catch {
+        return null;
+    }
+}
+
+exports.getUsersFromIds = async (ids) => { 
+    const _db = getDb();
+    try {
+        const collection = _db.collection('users');
+        const users = await collection.find({ _id: { $in: ids }} ).toArray();
+        return users;
     } catch {
         return null;
     }
@@ -58,11 +69,10 @@ exports.deleteUser = async (user) => {
 }
 
 exports.updateUserLocationHistory = async (userId, userLocationHistory) => {
-
     const _db = getDb();
     try {
         const collection = _db.collection("users");
-        const user = await collection.updateOne({ "_id": ObjectID(userId) }, { $set: { locationHistory: userLocationHistory } });
+        const user = await collection.updateOne({ "_id": ObjectId(userId) }, { $set: { locationHistory: userLocationHistory } });
         return user;
         
     } catch {
@@ -70,3 +80,5 @@ exports.updateUserLocationHistory = async (userId, userLocationHistory) => {
         
     }
 }
+
+

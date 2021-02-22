@@ -7,7 +7,6 @@ exports.createLocation = async (req, res) => {
     const validationResult = LocationValidation.validateLocation(location)
     if (validationResult === true) { 
         const createdLocation = await LocationModel.createLocation(location, userId);
-        console.log(createdLocation);
         if (createdLocation) {
             res.send(createdLocation)
         } else { 

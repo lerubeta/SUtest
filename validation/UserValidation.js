@@ -38,11 +38,18 @@ exports.validateUser = (user) => {
         errorOccurred = true;
     }else{
         //Check if Maximum length exceeded
-        if(user.status.length>6){
-            errorObject.status = "Status length exceeded";
-            errorObject.error = true;
-            errorOccurred = true;
-        }
+         if (user.status.length > 6) {
+             errorObject.status = "Status length exceeded";
+             errorObject.error = true;
+             errorOccurred = true;
+         } else { 
+            if (!validator.isInt(user.status)) {
+             errorObject.status = "Status must be an integer";
+             errorObject.error = true;
+             errorOccurred = true;
+         }
+
+         }
     }
     //Return true if form is valid, else return error object.
     return errorOccurred ? errorObject : true;

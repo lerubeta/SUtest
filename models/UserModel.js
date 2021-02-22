@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const User = require("../queries/User");
 
 exports.addUserToDb = async (user) => { 
@@ -25,7 +26,6 @@ exports.updateUserById = async (user, userToUpdate) => {
     const userUpdated = await User.updateUserById(user, userToUpdate);
     if (userUpdated) { 
         const userToReturn = await User.getUserById(user._id)
-        console.log(userToReturn)
         return userToReturn;
     }else { 
         return null;
@@ -39,6 +39,12 @@ exports.deleteUserById = async (user) => {
     }else{
         return false;
     }
+}
+
+exports.getUsersFromIds = async (usersIds) => {
+    const ids = usersIds.map(id => new ObjectId(id));
+    const result = await User.getUsersFromIds(ids);
+    return result;
 }
 
 const createUserObjectToInsert = (user) => { 
