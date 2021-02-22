@@ -1,7 +1,5 @@
 const LocationModel = require('../models/LocationModel');
 const LocationValidation = require('../validation/LocationValidation');
-const UserModel = require('../models/UserModel');
-const User = require('../queries/User');
 
 exports.createLocation = async (req, res) => { 
     const location = req.body; 

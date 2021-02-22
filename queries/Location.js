@@ -7,7 +7,8 @@ exports.addLocation = async (location) => {
      try {
         const collection = _db.collection('locations');
         const result = await collection.insertOne(location);
-        if (result) {
+         if (result) {
+            
             return result.ops[0];
         } else {
             return null;
@@ -36,7 +37,6 @@ exports.addLocationToUser = async (location, userId) => {
 exports.getLocationsByQuery = async (query) => { 
     const _db = getDb();
     try {
-        console.log(query);
         const collection = _db.collection('locations');
         const locations = await collection.find(query).toArray();
         return locations;
