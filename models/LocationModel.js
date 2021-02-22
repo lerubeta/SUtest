@@ -17,12 +17,17 @@ exports.createLocation = async (location, userId) => {
     }
 }
 
-const getLocationToInsert = (location, userId) => { 
-    return {
-        latLong: location.latLong,
-        timestamp: location.timestamp,
-        userId: ObjectID(userId)
-    }
+exports.searchLocations = async (query) => { 
+    const searchQuery = createQueryForSearch(query);
+    const locationsResults = await Location.getLocationsByQuery(searchQuery);
+    return locationsResults;
+}
+
+const createQueryForSearch = (searchQuery) => {
+    const query = {};
+    query.timestamp = getTimeQuery(searchQuery.time);
+    console.log(query)
+    return query;
 }
 
 addCreatedLocationToUser = async (location, userId) => {
@@ -32,5 +37,19 @@ addCreatedLocationToUser = async (location, userId) => {
         return true;
     }else{
         return false;
+    }
+}
+
+const getTimeQuery = (time) => { 
+    if (!time) return {};
+    const timeFilter = new Date(new Date().getTime() - (time*60*1000));
+    return { $gte: timeFilter };
+}
+
+const getLocationToInsert = (location, userId) => { 
+    return {
+        latLong: location.latLong,
+        timestamp: new Date(),
+        userId: ObjectID(userId)
     }
 }

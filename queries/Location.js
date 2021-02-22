@@ -19,7 +19,6 @@ exports.addLocation = async (location) => {
 
 exports.addLocationToUser = async (location, userId) => { 
     const user = await User.getUserById(userId);
-    console.log(location);
     if (user) {
         const userLocationHistory = user.locationHistory;
         userLocationHistory.push(ObjectID(location._id));
@@ -31,5 +30,18 @@ exports.addLocationToUser = async (location, userId) => {
         }
     } else { 
         return null;
+    }
+}
+
+exports.getLocationsByQuery = async (query) => { 
+    const _db = getDb();
+    try {
+        console.log(query);
+        const collection = _db.collection('locations');
+        const locations = await collection.find(query).toArray();
+        return locations;
+        
+    } catch {
+        return null;       
     }
 }

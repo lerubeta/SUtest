@@ -19,10 +19,5 @@ exports.validateLocation = (location) => {
             errorOccurred = true;
         }
     }
-    if (!location.timestamp || validator.isEmpty(location.timestamp)) { 
-        errorObject.timestamp = "Timestamp is a required field";
-        errorObject.error = true;
-        errorOccurred = true;
-    }
     return errorOccurred ? errorObject : true;
 }

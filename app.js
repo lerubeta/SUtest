@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const UserController = require("./controllers/UserController");
 const LocationController = require("./controllers/LocationController");
+const SearchController = require("./controllers/SearchController");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,5 +19,8 @@ app.delete("/user/:id", UserController.deleteUserById);
 
 //Location Endpoints
 app.post("/location", LocationController.createLocation);
+
+//Search Endpoints
+app.get("/search/location", SearchController.searchLocations);
 
 module.exports = app;
