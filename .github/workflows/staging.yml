@@ -1,4 +1,4 @@
-name: Heroku Staying deployment
+name: Heroku staging deployment action
 on:
   push:
     branches:
