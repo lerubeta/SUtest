@@ -1,4 +1,4 @@
-name: Main deploy to Heroku
+name: Heroku Staying deployment
 on:
   push:
     branches:
