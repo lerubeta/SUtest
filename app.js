@@ -23,5 +23,4 @@ app.post("/location", LocationController.createLocation);
 //Search Endpoints
 app.get("/search/location", SearchController.searchLocations);
 
-console.log('git action test');
 module.exports = app;
